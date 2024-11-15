@@ -1,6 +1,7 @@
-import Main from "./pages/main";
+import Home from "./pages/home";
+
 
 
 export {
-	Main
+	Home
 };
