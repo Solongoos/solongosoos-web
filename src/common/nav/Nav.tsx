@@ -5,7 +5,7 @@ export default function Nav() {
 	const [activeMenu, setActiveMenu] = useState(0);
 
 	return (
-		<nav className="flex items-center justify-between px-40 py-3 h-16 border-b  border-slate-200 sticky top-0 bg-white">
+		<nav className="flex items-center justify-between px-28 py-3 h-16 border-b  border-slate-200 sticky top-0 bg-white">
 			<div className="flex items-center gap-8 ">
 				<div className="flex text-lg font-bold">
 					<div className="mr-2">🌈</div>
@@ -26,4 +26,4 @@ export default function Nav() {
 	);
 }
 
-const MENU_MAP = ["제작 내역", "이벤트", "고객 후기", "문의"];
+const MENU_MAP = ["모바일 청첩장", "제작 내역", "문의"];
