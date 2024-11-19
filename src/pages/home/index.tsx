@@ -1,18 +1,25 @@
 import Card from "@/common/card/Card";
 import Nav from "@/common/nav/Nav";
+import SampleModal from "./SampleModal";
+import useModal from "@/hooks/useModal";
 export default function Home() {
+	const [isOpen, handleToggle] = useModal();
+
 	return (
-		<div className="bg-white">
-			<Nav />
-			
-			<ul className="pt-8 grid grid-cols-2 gap-8 place-items-center">
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-				<Card />
-			</ul>
-		
-		</div>
+		<>
+			<div className="bg-white">
+				<Nav />
+
+				<ul className="pt-8 grid grid-cols-2 gap-8 place-items-center">
+					<Card handleToggle={handleToggle} />
+					<Card handleToggle={handleToggle} />
+					<Card handleToggle={handleToggle} />
+					<Card handleToggle={handleToggle} />
+					<Card handleToggle={handleToggle} />
+				</ul>
+			</div>
+
+			{isOpen && <SampleModal isOpen={isOpen} handleToggle={handleToggle} />}
+		</>
 	);
 }

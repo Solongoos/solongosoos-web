@@ -14,14 +14,14 @@ export default function Nav() {
 
 				<ul className="flex items-center text-base font-semibold  text-black gap-1">
 					{MENU_MAP.map((menu, idx) => (
-						<li className={idx === activeMenu ? "px-2 py-5 text-cyan-500 font-bold" : "px-2 py-5"}>
+						<li key={idx} className={idx === activeMenu ? "px-2 py-5 text-cyan-500 font-bold" : "px-2 py-5"}>
 							<button>{menu}</button>
 						</li>
 					))}
 				</ul>
 			</div>
 
-			<Button>로그인</Button>
+			<Button onClick={() => console.log("로그인 클릭")}>로그인</Button>
 		</nav>
 	);
 }
