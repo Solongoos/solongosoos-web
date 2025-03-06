@@ -7,9 +7,23 @@ import CheckBox from "@/common/checkBox/CheckBox";
 
 export default function Create() {
 	const [selectedOption, setSelectedOption] = useState("");
+	const [accountForm, setAccountForm] = useState([0, 1]);
 
 	const handleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setSelectedOption(e.currentTarget.name);
+	};
+
+	const handleAdd = () => {
+		setAccountForm((prev) => [...prev, prev[prev.length - 1] + 1]);
+	};
+
+	const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+		const id = Number(e.currentTarget.id);
+
+		const arr = [...accountForm];
+		arr.splice(id, 1);
+
+		setAccountForm(arr);
 	};
 
 	return (
@@ -18,7 +32,7 @@ export default function Create() {
 
 			<section className="flex flex-col w-[580px] h-[2500px] rounded-sm bg-gray-50 gap-4">
 				{PERSON_INFO.map((person, idx) => (
-					<AccordionBox title={idx === 0 ? "신랑측 정보" : "신부측 정보"}>
+					<AccordionBox title={idx === 0 ? "신랑측 정보" : "신부측 정보"} key={idx}>
 						<div>
 							<div className="flex text-sm gap-2 mb-4">
 								<p className="mr-4 w-[65px]">아버님</p>
@@ -133,6 +147,47 @@ export default function Create() {
 						<p className="mr-4 w-[90px]">신부 어머니</p>
 						<Input placeholder="성함" width="m" />
 						<Input placeholder="전화번호" width="s" />
+					</div>
+				</AccordionBox>
+
+				{/* TODO: 계좌번호 UI 수정 */}
+				<AccordionBox title="계좌번호">
+					{accountForm.map((el, idx) => {
+						return (
+							<div key={el} className="flex flex-col">
+								{idx !== 0 && idx !== 1 && (
+									<button
+										id={String(idx)}
+										className="flex items-center justify-center w-[16px] h-[16px] ml-auto mb-4 border bg-gray-200 text-gray-400 text-sm rounded-sm p-2"
+										onClick={handleDelete}
+									>
+										x
+									</button>
+								)}
+
+								<div className="flex content-center items-center text-sm gap-2 mb-4">
+									<p className="mr-4 w-[60px] whitespace-nowrap">계좌번호</p>
+									<Input placeholder="은행" />
+									<Input placeholder="계좌번호" />
+								</div>
+
+								<div className="flex content-center items-center text-sm gap-2 mb-6">
+									<p className="mr-4 w-[60px] whitespace-nowrap">예금주</p>
+									<Input placeholder="성함" />
+								</div>
+
+								{idx !== accountForm.length - 1 && <hr className="mb-6" />}
+							</div>
+						);
+					})}
+
+					<div className="flex justify-end">
+						<button
+							className="w-22 h-10 whitespace-nowrap px-4 leading-9 rounded-3xl text-sm  text-white  bg-cyan-500"
+							onClick={handleAdd}
+						>
+							+ 계좌 추가
+						</button>
 					</div>
 				</AccordionBox>
 			</section>
