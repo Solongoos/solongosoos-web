@@ -1,0 +1,32 @@
+.quill {
+    width: 100%;
+    border: 1px solid #d9d9d9;
+    border-radius: 0.25rem;
+    
+    .ql-editor {
+    resize:vertical;
+    overflow-y: scroll;
+    min-height: 50px;
+    height: 100px;
+ }
+ 
+ .ql-toolbar {
+    border: none;
+  }
+  
+  .ql-container {
+    border: none;
+    font-size: 12px;
+    line-height: 24px;
+    color: #262626;
+
+    .ql-editor.ql-blank::before {
+      height: 150px;
+      line-height: 24px;
+      color: #bfbfbf;
+      font-style: normal;
+    }
+
+ 
+  }
+}

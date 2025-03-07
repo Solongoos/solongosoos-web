@@ -4,10 +4,15 @@ import Dropdown from "@/common/other/Dropdown";
 import { useState } from "react";
 
 import CheckBox from "@/common/checkBox/CheckBox";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "./quill.custom.css";
 
 export default function Create() {
 	const [selectedOption, setSelectedOption] = useState("");
 	const [accountForm, setAccountForm] = useState([0, 1]);
+
+	const [text, setText] = useState("");
 
 	const handleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setSelectedOption(e.currentTarget.name);
@@ -29,7 +34,6 @@ export default function Create() {
 	return (
 		<div className="flex justify-center gap-4 pt-4 bg-gray-50">
 			<section className="w-[390px] h-[1000px] border border-gray-200 rounded-lg bg-white">미리보기</section>
-
 			<section className="flex flex-col w-[580px] h-[2500px] rounded-sm bg-gray-50 gap-4">
 				{PERSON_INFO.map((person, idx) => (
 					<AccordionBox title={idx === 0 ? "신랑측 정보" : "신부측 정보"} key={idx}>
@@ -190,6 +194,30 @@ export default function Create() {
 						</button>
 					</div>
 				</AccordionBox>
+
+				<AccordionBox title="모시는 글">
+					<div className="flex content-center items-center text-sm gap-2 mb-4">
+						<p className="mr-4 w-[65px]">제목</p>
+						<Input placeholder="제목을 입력해주세요" />
+					</div>
+
+					<div className="flex content-center items-center text-sm gap-2 mb-4">
+						<p className="mr-4 w-[65px]">내용</p>
+
+						<ReactQuill
+							theme="snow"
+							modules={MODULES}
+							formats={FORMATS}
+							value={text}
+							onChange={setText}
+							placeholder="내용을 입력해주세요(최대 00자)"
+						/>
+					</div>
+
+					<div className="flex content-center items-center text-sm gap-2 mb-4">
+						<p className="mr-4 w-[65px]">사진</p>
+					</div>
+				</AccordionBox>
 			</section>
 		</div>
 	);
@@ -197,3 +225,39 @@ export default function Create() {
 
 const PERSON_INFO = ["신랑님", "신부님"];
 const OPTION = ["첫째", "둘째", "셋째", "넷째", "막내", "외동"];
+
+const FORMATS = ["bold", "italic", "underline", "align", "color"];
+const MODULES = {
+	toolbar: [
+		[
+			"bold",
+			"italic",
+			"underline",
+			{ align: ["", "right", "center", "justify"] },
+			{
+				color: [
+					"#F00",
+					"#FFFF00",
+					"#00F",
+					"#008000",
+					"#000",
+					"#C0C0C0",
+					"#FFF",
+					"#abdee6",
+					"#cbaacb",
+					"#ffffb5",
+					"#ffccb6",
+					"#f3b0c3",
+					"#c6dbda",
+					"#fee1e8",
+					"#fed7c3",
+					"#f6eac2",
+					"#ffc8a2",
+					"#97c1a9",
+					"#cce2cb",
+					"#a2e1db",
+				],
+			},
+		],
+	],
+};
