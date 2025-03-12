@@ -1,18 +1,21 @@
 import Input from "@/common/other/Input";
 import AccordionBox from "./AccordionBox";
 import Dropdown from "@/common/other/Dropdown";
-import { useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 
 import CheckBox from "@/common/checkBox/CheckBox";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./quill.custom.css";
 
+import { CloseIcon, UploadIcon } from "@/assets/svg";
+
 export default function Create() {
 	const [selectedOption, setSelectedOption] = useState("");
 	const [accountForm, setAccountForm] = useState([0, 1]);
 
 	const [text, setText] = useState("");
+	const [imgInfo, setImgInfo] = useState({ name: "", url: "" });
 
 	const handleSelect = (e: React.MouseEvent<HTMLButtonElement>) => {
 		setSelectedOption(e.currentTarget.name);
@@ -29,6 +32,22 @@ export default function Create() {
 		arr.splice(id, 1);
 
 		setAccountForm(arr);
+	};
+
+	const handleChangeFile: ChangeEventHandler<HTMLInputElement> = (e) => {
+		const file = e.currentTarget.files?.[0];
+
+		if (!file) {
+			return;
+		}
+
+		const url = URL.createObjectURL(file);
+
+		setImgInfo({ name: file.name, url });
+	};
+
+	const handleImgRemove = () => {
+		setImgInfo({ name: "", url: "" });
 	};
 
 	return (
@@ -162,10 +181,10 @@ export default function Create() {
 								{idx !== 0 && idx !== 1 && (
 									<button
 										id={String(idx)}
-										className="flex items-center justify-center w-[16px] h-[16px] ml-auto mb-4 border bg-gray-200 text-gray-400 text-sm rounded-sm p-2"
+										className="flex items-center justify-center w-[16px] h-[16px] ml-auto mb-4 border bg-gray-200 text-gray-400 text-sm rounded-sm"
 										onClick={handleDelete}
 									>
-										x
+										<CloseIcon />
 									</button>
 								)}
 
@@ -214,8 +233,45 @@ export default function Create() {
 						/>
 					</div>
 
-					<div className="flex content-center items-center text-sm gap-2 mb-4">
+					<div className="flex text-sm  mb-4">
 						<p className="mr-4 w-[65px]">사진</p>
+
+						{imgInfo.url ? (
+							<div className="flex items-end gap-4">
+								<div className="flex items-center justify-center  border border-gray-200 w-[150px] h-[150px] bg-gray-100 rounded-sm">
+									<img src={imgInfo.url} className="w-full h-full object-contain" />
+								</div>
+
+								<div className="flex gap-2">
+									<span className="text-xs">{imgInfo.name}</span>
+
+									<button
+										className="flex items-center justify-center w-[16px] h-[16px] ml-auto  border bg-gray-200 text-gray-400 text-sm rounded-sm"
+										onClick={handleImgRemove}
+									>
+										<CloseIcon />
+									</button>
+								</div>
+							</div>
+						) : (
+							<>
+								<label
+									htmlFor="upload"
+									className="w-[150px] h-[150px] border border-gray-200 rounded-sm flex justify-center items-center flex-col gap-2 cursor-pointer border-dashed bg-slate-50"
+								>
+									<UploadIcon />
+									<span className="text-xs text-cyan-500">클릭하여 업로드</span>
+								</label>
+
+								<input
+									type="file"
+									accept="image/jpg, image/jpeg, image/png"
+									id="upload"
+									className="hidden"
+									onChange={handleChangeFile}
+								/>
+							</>
+						)}
 					</div>
 				</AccordionBox>
 			</section>
